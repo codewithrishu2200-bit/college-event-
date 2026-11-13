@@ -1,0 +1,6 @@
+{
+  "name": "CampusPulse",
+  "description": "Centralized college event discovery and guarded Google Forms registration gateway for students, organizers, and campus administrators.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
