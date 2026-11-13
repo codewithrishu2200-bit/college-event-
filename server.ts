@@ -1,12 +1,11 @@
 import "dotenv/config";
-import express, { NextFunction, Request, Response } from "express";
+import express, { type NextFunction, type Request, type Response } from "express";
 import helmet from "helmet";
 import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { OAuth2Client } from "google-auth-library";
 import path from "path";
-import { createServer as createViteServer } from "vite";
 import { db, initializeDatabase } from "./server/db.ts";
 
 const PORT = Number(process.env.PORT || 3000);
@@ -373,6 +372,8 @@ async function startServer() {
     helmet({
       contentSecurityPolicy: false,
       crossOriginEmbedderPolicy: false,
+      crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
+      frameguard: false,
     })
   );
   app.use(express.json({ limit: "1mb" }));
@@ -1471,6 +1472,7 @@ async function startServer() {
 
   // Frontend serving: Vite middleware in development, static dist/ in production
   if (process.env.NODE_ENV !== "production") {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
